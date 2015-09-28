@@ -1,0 +1,43 @@
+@(f: Form[UserSignup])
+@import helper._
+@implicitField = @{ FieldConstructor(betterInput.f) }
+@externalMain("Online Minecraft server support tickets") {
+    <div class="container center-block text-center" id="pjax-container">
+        <h1>Server support & help tickets</h1>
+        <h3>Maintain your Minecraft community</h3>
+        <div class="row">
+            @form(controllers.routes.ExternalRoutes.submitSignup(), 'class->"form-inline") {
+                @globalErrorDisplay(f)
+                @CSRF.formField
+                @helper.inputText(f("email"), 'class -> "form-control", 'placeholder -> "Email")
+                @helper.inputPassword(f("password"), 'class -> "form-control", 'placeholder -> "Password")
+                <button class="btn btn-success" type="submit">Sign up</btn>
+            }
+        </div>
+    </div>
+    <div class="container center-block text-center" id="features">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="glyphicon glyphicon-pencil glyphicon-lg"></div>
+                <h4>Great support experience</h4>
+                <p>
+                    Ticketeer lets you give your users prompt support and immediate feedback ingame. It's more fun to use as well!
+                </p>
+            </div>
+            <div class="col-lg-4">
+                <div class="glyphicon glyphicon-cloud glyphicon-lg"></div>
+                <h4>Web and ingame access</h4>
+                <p>
+                    Ticketeer allows you to support your community from any device at any time.
+                </p>
+            </div>
+            <div class="col-lg-4">
+                <div class="glyphicon glyphicon-heart glyphicon-lg"></div>
+                <h4>Motivated developers</h4>
+                <p>
+                    Ticketeer is written with passion by experienced developers. We're quick to adapt to your needs.
+                </p>
+            </div>
+        </div>
+    </div>
+}

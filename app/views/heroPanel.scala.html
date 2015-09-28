@@ -1,0 +1,15 @@
+@(title: String)(heading: Html)(content: Html)
+@main(title) {
+    <div class="container">
+        <div class="row offset-lg-top">
+            <div class="col-md-4 center-block">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@heading</div>
+                    <div class="panel-body">
+                        @content
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

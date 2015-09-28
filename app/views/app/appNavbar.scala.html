@@ -1,0 +1,32 @@
+@(selected: Tabs)
+@navbar {
+    <ul class="nav navbar-nav">
+        <li @if(selected.equals(Tabs.DASHBOARD)){ class="active" }><a href="@controllers.routes.AppRoutes.dashboard()">Dashboard</a></li>
+        <li @if(selected.equals(Tabs.MY_TICKETS)){ class="active" }><a href="@controllers.routes.AppRoutes.userTickets()">My tickets</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        @*<li @if(selected.equals(Tabs.SETTINGS)){ class="active" }><a href="@controllers.routes.AppRoutes.settings()">Settings</a></li>*@
+
+        @if(!User.sessionUser().ownsServer()){
+            <li>
+                <div class="navbar-btn"><a href="@controllers.routes.AppRoutes.createServer()" class="btn btn-default">Create server</a></div>
+            </li>
+        } else {
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                    @User.sessionUser().getCurrentServer().name <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="@Util.getSupportURL(User.sessionUser().getCurrentServer())">View web interface</a></li>
+                    <li><a href="@Util.DEFAULT_SUPPORT">Ticketeer support</a></li>
+                    <li><a href="http://dev.bukkit.org/bukkit-plugins/ticketeer/">Download server plugin (BukkitDev)</a></li>
+                    <hr>
+                    <li><a href="@controllers.routes.AppRoutes.settings()">Settings</a></li>
+                </ul>
+            </li>
+        }
+        <li>
+            <div class="navbar-btn"><a href="@controllers.routes.ExternalRoutes.signout()" class="btn btn-warning navbar-btn-space">Sign out</a></div>
+        </li>
+    </ul>
+}

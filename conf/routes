@@ -1,0 +1,62 @@
+# Higher priority routes first
+
+GET     /                           controllers.ExternalRoutes.index()
+
+GET     /dashboard                  controllers.AppRoutes.dashboard(q: String ?= null, p: Int ?= 0)
+
+POST    /api/v1/verify              controllers.APIRoutes.verifySecret()
+
+POST    /api/v1/ticket/create       controllers.APIRoutes.createTicket()
+
+POST    /api/v1/user/login          controllers.APIRoutes.userLogin()
+
+GET     /create-ticket              controllers.AppRoutes.createTicket()
+
+POST    /create-ticket              controllers.AppRoutes.submitTicket()
+
+GET     /ticket/:id                 controllers.AppRoutes.viewTicket(id: Long)
+
+POST    /ticket/:id/respond         controllers.AppRoutes.submitTicketResponse(id: Long)
+
+POST    /ticket/:id/close           controllers.AppRoutes.closeTicket(id: Long)
+
+POST    /response/:id/remove        controllers.AppRoutes.removeTicketResponse(id: Long)
+
+POST    /response/:id/edit          controllers.AppRoutes.editResponse(id: Long)
+
+GET     /my-tickets                 controllers.AppRoutes.userTickets(q: String ?= null, p: Int ?= 0)
+
+GET     /settings                   controllers.AppRoutes.settings()
+
+POST    /settings/changeUsername    controllers.AppRoutes.changeUsername()
+
+GET     /create-server              controllers.AppRoutes.createServer()
+
+POST    /create-server              controllers.AppRoutes.submitCreateServer()
+
+GET     /pricing                    controllers.ExternalRoutes.pricing()
+
+GET     /signup                     controllers.ExternalRoutes.signup()
+
+POST    /signup                     controllers.ExternalRoutes.submitSignup()
+
+GET     /signin                     controllers.ExternalRoutes.signin(returnTo: String ?= null)
+
+POST    /signin                     controllers.ExternalRoutes.submitSignin()
+
+GET     /signout                    controllers.ExternalRoutes.signout()
+
+GET     /forgot-password            controllers.ExternalRoutes.forgotPassword()
+
+POST    /forgot-password            controllers.ExternalRoutes.submitForgotPassword()
+
+GET     /account/reset              controllers.ExternalRoutes.resetPassword(user: String, token: String)
+ 
+POST    /account/reset              controllers.ExternalRoutes.submitResetPassword()
+
+GET     /account/register           controllers.ExternalRoutes.registerUser(user: String, token: String)
+
+GET     /sitemap$suffix<[^/]*>.xml  com.edulify.modules.sitemap.SitemapController.sitemap(suffix: String)
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)

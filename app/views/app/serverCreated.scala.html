@@ -1,0 +1,16 @@
+@(server: Server)
+@heroPanel("Server secret") {
+    Server secret
+} {
+    <p>
+        A secret key has been generated for your server to identify it to Ticketeer. Keep it safe! You can view and reset the secret any time in the settings page.
+    </p>
+    <p>
+        Run the command <div class="well well-sm">/ticketeer link @server.name @server.secret</div> on your Minecraft server to set up the Ticketeer server plugin.
+    </p>
+    <p>
+        <a href="@controllers.routes.AppRoutes.dashboard()">
+            <button type="button" class="btn btn-success btn-block">Continue to dashboard</button>
+        </a>
+     </p>
+}

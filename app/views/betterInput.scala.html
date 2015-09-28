@@ -1,0 +1,44 @@
+@(elements: helper.FieldElements)
+@import util._
+@defining(elements.args.get('_id).getOrElse(Util.getFormFieldId(elements.id))) { eID =>
+@defining(elements.input.toString().contains("type=\"checkbox\"")) { isCheckbox =>
+@defining(elements.args.get('_label).getOrElse("").toString()) { label =>
+<div class="form-group @elements.args.get('_class)@if(elements.hasErrors) {has-error}">
+    @if(!label.isEmpty() && !isCheckbox) {
+        <label for="@elements.id" class="control-label">@Html(label)</label>
+    }
+    @if(elements.hasErrors) {
+        <label for="@elements.id" class="control-label">
+            @elements.errors.mkString(", ")
+        </label><br>
+    }
+    @defining(elements.args.get('_inputgroupaddon).getOrElse("").toString()) { inputgroupaddon =>
+        @if(!inputgroupaddon.isEmpty()) {
+            <div class="input-group @elements.args.get('_inputgroupClass)">
+        }
+        @if(isCheckbox) {
+            <div class="checkbox"><label>
+        }
+        @elements.input
+        @if(!label.isEmpty() && isCheckbox) {
+            @Html(label)
+        }
+        @if(isCheckbox) {
+            </label></div>
+        }
+
+        @if(!inputgroupaddon.isEmpty()) {
+            @if(!elements.args.get('_buttonaddon).getOrElse("").toString().isEmpty()) {
+                <div class="input-group-btn">
+                    <button class="btn btn-default" type="submit">@inputgroupaddon</button>
+                </div>
+            } else {
+                <div class="input-group-addon">@inputgroupaddon</div>
+            }
+            </div>
+        }
+    }
+</div>
+}
+}
+}

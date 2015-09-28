@@ -1,0 +1,7 @@
+locale: en
+name: ''
+secret: ''
+domains:
+    api: "http://ticketeer.net/api/v1"
+    name: "ticketeer.net"
+autoupdate: true

@@ -1,0 +1,20 @@
+@(f: Form[UserSignin])
+@import helper._
+@implicitField = @{ FieldConstructor(betterInput.f) }
+@heroPanel("Sign in") {
+    @Messages("forms.signin.heading")<a href="@controllers.routes.ExternalRoutes.signup()" style="color:#fff" class="pull-right">Or sign up</a>
+} {
+    @form(controllers.routes.ExternalRoutes.submitSignin()) {
+        @globalErrorDisplay(f)
+        @CSRF.formField
+        @helper.inputText(f("email"), 'class -> "form-control", '_label -> "Email", 'placeholder -> "Email")
+        @helper.inputPassword(f("password"), 'class -> "form-control", '_label -> "Password", 'placeholder -> "Password")
+        <button class="btn btn-success btn-block" type="submit">Sign in</button>
+        <hr>
+        <a href="@controllers.routes.ExternalRoutes.forgotPassword()" 
+           role="button" 
+           class="btn btn-info btn-block">
+                Forgot password
+        </a>
+    }
+}

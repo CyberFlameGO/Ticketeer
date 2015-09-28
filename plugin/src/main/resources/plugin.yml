@@ -1,0 +1,10 @@
+name: Ticketeer
+authors: [fullwall]
+version: ${project.version}
+main: net.ticketeer.Ticketeer
+website: http://www.ticketeer.net
+commands:
+  ticketeer:
+    description: Ticketeer commands
+  ticket:
+    description: Ticket commands

@@ -1,0 +1,80 @@
+@(tickets: com.avaje.ebean.Page[Ticket], query: String, root: play.api.mvc.Call, prev: play.api.mvc.Call, next: play.api.mvc.Call)
+@import helper._
+<div class="row">
+    <div class="col-lg-3">
+        @form(root) {
+            <div class="input-group">
+              <input type="text" class="form-control" name="q" placeholder="Search"
+                @if(query != null && !query.isEmpty()) {
+                    value="@query"
+                }
+              >
+              <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+              </span>
+            </div>
+        }
+    </div>
+</div>
+<p>
+    <div class="row">
+        <div class="col-lg-10">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table id="ticket-table" class="table table-condensed table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Submitter</th>
+                                    <th>Title</th>
+                                    <th>Updated</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for(ticket <- tickets.getList()) {
+                                    <tr data-url="@controllers.routes.AppRoutes.viewTicket(ticket.id)" 
+                                    class="removable" 
+                                    data-removeurl="@controllers.routes.AppRoutes.closeTicket(ticket.id)">
+                                        <td>@ticket.submitter.getNameForTicket()</td>
+                                        <td>@ticket.title</td>
+                                        <td>@Util.formatAsRelativeTime(ticket.lastUpdated)</td>
+                                        <td>
+                                            @if(ticket.isClosableBy(User.sessionUser())){
+                                                <button class="btn btn-default btn-sm glyphicon glyphicon-remove remove-btn">
+                                                </button>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</p>
+<p>
+    <div class="row">
+        <div class="col-lg-3">
+            <nav>
+                <ul class="pagination">
+                    @if(!tickets.hasPrev()) { 
+                        <li class="disabled"><a href="#">&laquo;</a></li> 
+                    } else {
+                        <li><a href="@prev.url">&laquo;</a></li>
+                    }
+                    <li class="active"><a href="#">@(tickets.getPageIndex() + 1)</a></li>
+                    @if(!tickets.hasNext()) { 
+                        <li class="disabled"><a href="#">&raquo;</a></li> 
+                    } else {
+                        <li><a href="@next.url">&raquo;</a></li>
+                    }
+                </ul>
+            </nav>
+        </div>
+    </div>
+</p>

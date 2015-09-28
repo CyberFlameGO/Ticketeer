@@ -1,0 +1,8 @@
+@(tickets: com.avaje.ebean.Page[Ticket], query: String)
+@appMain("Ticket dashboard", Tabs.DASHBOARD) {
+    <div class="container">
+        @ticketsDisplay(tickets, query, controllers.routes.AppRoutes.dashboard(), 
+        controllers.routes.AppRoutes.dashboard(query, tickets.getPageIndex() - 1), 
+        controllers.routes.AppRoutes.dashboard(query, tickets.getPageIndex() + 1))
+    </div>
+}

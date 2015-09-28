@@ -1,0 +1,44 @@
+@(ticket: Ticket, responses: Collection[TicketResponse], f: Form[TicketResponseForm])
+@import java.text._
+@import helper._
+@implicitField = @{ FieldConstructor(betterInput.f) }
+@appMain("Viewing ticket: " + ticket.title, Tabs.DASHBOARD) {
+    <div class="container">
+        <h1>@ticket.title</h1>
+        @for(response <- responses) {
+            <div class="row removable" data-removeurl="@controllers.routes.AppRoutes.removeTicketResponse(response.id)">
+                <div class="panel panel-default col-lg-5">
+                    <div class="panel-body editable" data-editurl="@controllers.routes.AppRoutes.editResponse(response.id)">
+                        <span class="text-muted">Sent by @if(response.getResponder() != null){@response.getResponder().getNameForTicket()}else{anonymous}
+                            @Util.formatAsRelativeTime(response.creationDate)
+                            @if(response.isEditableBy(User.sessionUser())) {
+                                <button class="btn btn-default btn-sm pull-right glyphicon glyphicon-remove remove-btn">
+                                </button>
+                                <button class="btn btn-default btn-sm pull-right glyphicon glyphicon-edit response-edit-btn">
+                                </button>
+                            }
+                        </span>
+                        <hr>
+                        <div class="ticket-content">
+                            @Html(response.getMarkdownContent())
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        @if(ticket.isAcceptingResponses()) {
+            <div class="row">
+                <div class="panel panel-default col-lg-5">        
+                    <h3>Add response</h3>
+                    @form(controllers.routes.AppRoutes.submitTicketResponse(ticket.id)) {
+                        @globalErrorDisplay(f)
+                        @CSRF.formField
+                        @helper.textarea(f("content"), 'class -> "form-control", 'placeholder -> "Content")
+                        <button class="btn btn-success" type="submit">Submit</button>
+                    }
+                    <br>
+                </div>
+            </div>
+        }
+    </div>
+}

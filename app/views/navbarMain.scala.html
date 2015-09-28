@@ -1,0 +1,7 @@
+@(title: String, content: Html, navbar: Html)
+@main(title) {
+    @if(request.headers.get("X-PJAX") == null) {
+        @navbar
+    }
+    @content
+}

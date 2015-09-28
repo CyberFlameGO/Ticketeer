@@ -1,0 +1,133 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>net.ticketeer</groupId>
+	<artifactId>ticketeer</artifactId>
+	<version>1.0.2</version>
+	<name>Ticketeer</name>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<bukkit.version>1.8-R0.1-SNAPSHOT</bukkit.version>
+		<jackson.version>2.5.0</jackson.version>
+		<httpclient.version>4.3.6</httpclient.version>
+		<updater.version>2.3</updater.version>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>bukkit-repo</id>
+			<url>http://repo.bukkit.org/content/groups/public/</url>
+		</repository>
+		<repository>
+			<id>gravity-repo</id>
+			<url>http://repo.gravitydevelopment.net</url>
+		</repository>
+	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>bukkit-plugins</id>
+			<url>http://repo.bukkit.org/content/groups/public</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.bukkit</groupId>
+			<artifactId>bukkit</artifactId>
+			<version>${bukkit.version}</version>
+			<type>jar</type>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>fluent-hc</artifactId>
+			<version>${httpclient.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.gravitydevelopment.updater</groupId>
+			<artifactId>updater</artifactId>
+			<version>${updater.version}</version>
+		</dependency>
+	</dependencies>
+
+	<url>http://www.ticketeer.io</url>
+	<scm>
+		<connection>scm:git:git://github.com/fullwall/Ticketeer.git</connection>
+		<developerConnection>scm:git:git:@github.com:fullwall/Ticketeer.git</developerConnection>
+		<url>https://github.com/fullwall/Ticketeer/tree/master/</url>
+	</scm>
+	<build>
+		<defaultGoal>clean package install</defaultGoal>
+		<sourceDirectory>${basedir}/src/main/java</sourceDirectory>
+
+		<resources>
+			<resource>
+				<targetPath>.</targetPath>
+				<filtering>true</filtering>
+				<directory>${basedir}/src/main/resources</directory>
+				<includes>
+					<include>*.yml</include>
+					<include>*.properties</include>
+				</includes>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.2</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>2.1</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<outputFile>../../Bukkit/Server/plugins/Ticketeer.jar</outputFile>
+							<relocations>
+								<relocation>
+									<pattern>org.apache</pattern>
+									<shadedPattern>lib.apache</shadedPattern>
+								</relocation>
+								<relocation>
+									<pattern>com.fasterxml</pattern>
+									<shadedPattern>lib.fasterxml</shadedPattern>
+								</relocation>
+								<relocation>
+									<pattern>net.gravitydevelopment.updater</pattern>
+									<shadedPattern>lib.updater</shadedPattern>
+								</relocation>
+							</relocations>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

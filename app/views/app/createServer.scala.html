@@ -1,0 +1,13 @@
+@(f: Form[CreateServerForm])
+@import helper._
+@implicitField = @{ FieldConstructor(betterInput.f) }
+@heroPanel("Create server") {
+    Create your server
+} {
+    @form(controllers.routes.AppRoutes.submitCreateServer()) {
+        @globalErrorDisplay(f)
+        @CSRF.formField
+        @helper.inputText(f("serverName"), 'class -> "form-control", '_label -> "Server name", '_inputgroupaddon->("."+Util.DOMAIN_NAME), 'placeholder -> "")
+        <button class="btn btn-success btn-block" type="submit">Create server</button>
+    }
+}

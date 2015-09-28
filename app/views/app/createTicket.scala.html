@@ -1,0 +1,19 @@
+@(f: Form[TicketForm])
+@import helper._
+@implicitField = @{ FieldConstructor(betterInput.f) }
+@heroPanel("Submit your ticket") {
+    Create a ticket
+} {
+    @form(controllers.routes.AppRoutes.submitTicket()) {
+        @globalErrorDisplay(f)
+        @CSRF.formField
+        @if(User.sessionUser() == null) {
+            @helper.inputText(f("signupEmail"), 'class -> "form-control", '_label -> "Enter a valid email", 'placeholder -> "Email")
+        }
+        @helper.inputText(f("title"), 'class -> "form-control", '_label -> "Enter a ticket title", 'placeholder -> "Title")
+        @helper.textarea(f("content"), 'class -> "form-control", 
+            '_label -> "What's your ticket about? Please be as descriptive as possible.", 
+            'placeholder -> "Content")
+        <button class="btn btn-success btn-block" type="submit">Submit</btn>
+    }
+}

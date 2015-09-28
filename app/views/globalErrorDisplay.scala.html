@@ -1,0 +1,17 @@
+@(f: Form[_ <: Any], cssClass: String = "col-md-12")
+@if(f.hasGlobalErrors) { 
+    <div class="row">
+        <div class="@cssClass">
+            @for(errorList <- f.errors.values) {
+                @for(error <- errorList) {
+                    @if(error.key.isEmpty || error.key.startsWith("alert-")) {
+                        <div class="alert @if(error.key.startsWith("alert-")){@error.key}else{alert-danger}">
+                                  <button class="close" data-dismiss="alert">&times;</button>
+                                  @error.message
+                        </div>
+                    }
+                }
+            }
+        </div>
+    </div>
+}

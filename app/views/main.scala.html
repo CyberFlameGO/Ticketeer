@@ -1,0 +1,36 @@
+@(title: String)(content: Html)
+@if(request.headers.get("X-PJAX") != null) {
+    <title>@(title + " - Ticketeer")</title>
+    @content
+} else {
+    <!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <title>@(title + " - Ticketeer")</title>
+            <link rel="stylesheet" media="screen" href="@controllers.routes.Assets.at("css/main.css")">
+            <link rel="stylesheet" media="screen" href="@controllers.routes.Assets.at("css/bootstrap.min.css")">
+            <link rel="shortcut icon" type="image/png" href="@controllers.routes.Assets.at("img/favicon.png")">
+        </head>
+        <body>
+            @content
+            <script src="@controllers.routes.Assets.at("js/jquery-1.11.2.min.js")"></script>
+            <script src="@controllers.routes.Assets.at("js/bootstrap.min.js")"></script>
+            <script src="@controllers.routes.Assets.at("js/main.js")"></script>
+            <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+              })(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-58261970-1', 'auto');ga('send', 'pageview');</script>
+            
+            @*<script src="@controllers.routes.Assets.at("js/jquery.pjax.js")"></script>
+            <script>
+                if ($.support.pjax) {
+                    var c = $('#pjax-container');
+                    $(document).on('click', 'a[data-pjax]', function(event) {
+                        var d = $(this).data('pjax');
+                        $.pjax.click(event, {container: d ? $(d) : c});
+                    });
+                }
+            </script>*@
+        </body>
+    </html>
+}
